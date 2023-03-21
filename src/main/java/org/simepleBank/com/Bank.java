@@ -8,14 +8,14 @@ public class Bank {
     private double rate = 0.01;
     private int nextacct = 0;
 
-    public  int newAccount(){
+    public int newAccount() {
         int acctnum = nextacct++;
         accounts.put(acctnum, 0);
 
         return acctnum;
     }
 
-    public int getBalance( int acctnum){
+    public int getBalance(int acctnum) {
         return accounts.get(acctnum);
     }
 
@@ -24,7 +24,8 @@ public class Bank {
         accounts.put(acctnum, balance + amt);
     }
 
-    public boolean authorizeLoan(int acctnum, int loanamt){
+    //////// loan auth method
+    public boolean authorizeLoan(int acctnum, int loanamt) {
         int balance = accounts.get(acctnum);
         return balance >= loanamt / 2;
     }
@@ -34,11 +35,9 @@ public class Bank {
         Set<Integer> accts = accounts.keySet();
         String result = "The bank has " + accts.size() + " accounts. ";
 
-        for (int i : accts){
+        for (int i : accts)
             result += "\n\tBank account " + i
                     + ": balance=" + accounts.get(i);
-        }
-
         return result;
 
     }
@@ -51,9 +50,5 @@ public class Bank {
             accounts.put(i, newbalance);
         }
     }
-
-
-
-
 
 }
