@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Main {
+public class BankProgram {
 
     private HashMap<Integer, Integer> accounts = new HashMap<>();
     private double rate = 0.01;
@@ -13,12 +13,18 @@ public class Main {
     private Scanner scanner;
     private  boolean done = false;
 
+    public static void main(String[] args) {
+        BankProgram program = new BankProgram();
+        program.run();
+    }
+
     public void run(){
         scanner = new Scanner(System.in);
         while (!done){
-            System.out.println("Enter command (0=quit, 1=new,\n" +
-                    "2=select, 3=deposit, 4=loan,\n" +
-                    "5=show, 6=interest):");
+            System.out.println("""
+                    Enter command (0=quit, 1=new,
+                    2=select, 3=deposit, 4=loan,
+                    5=show, 6=interest):""");
 
             int cmd = scanner.nextInt();
             processCommand(cmd);
@@ -35,9 +41,7 @@ public class Main {
         else if (cmd == 5) {showAll();}
         else if (cmd == 6) {addInterest();}
         else {
-            System.out.println("Illegal command");
-            
-
+            System.out.println("Illegal command"); // any number apart from 0 -- 6 entered,, throw illegal command.
         }
 
     }
@@ -101,9 +105,5 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
-        System.out.println("Enter command (0=quit, 1=new,\n" +
-                "2=select, 3=deposit, 4=loan,\n" +
-                "5=show, 6=interest):");
-    }
+
 }
