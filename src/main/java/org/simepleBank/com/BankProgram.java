@@ -14,8 +14,9 @@ public class BankProgram {
     private  boolean done = false;
 
     public static void main(String[] args) {
-        BankProgram program = new BankProgram();
-        program.run();
+       // BankProgram program = new BankProgram();
+        BankClient client = new BankClient();
+        client.run();
     }
 
     public void run(){

@@ -1,53 +1,66 @@
 package org.simepleBank.com;
 
 import java.util.HashMap;
-import java.util.Set;
 
 public class Bank {
-    private HashMap<Integer, Integer> accounts = new HashMap<>();
+    private HashMap<Integer, BankAccount> accounts = new HashMap<>();
     private double rate = 0.01;
     private int nextacct = 0;
 
-    public int newAccount() {
+    public int newAccount( boolean isforeign) {
         int acctnum = nextacct++;
-        accounts.put(acctnum, 0);
+        BankAccount ba = new BankAccount(acctnum);
+        ba.setForeign(isforeign);
+        accounts.put(acctnum, ba);
 
         return acctnum;
     }
 
     public int getBalance(int acctnum) {
-        return accounts.get(acctnum);
+        BankAccount ba = accounts.get(acctnum);
+        return ba.getBalance();
     }
 
+
     public void deposit(int acctnum, int amt) {
-        int balance = accounts.get(acctnum);
-        accounts.put(acctnum, balance + amt);
+        BankAccount ba = accounts.get(acctnum);
+        int balance = ba.getBalance();
+        ba.setBalance(balance+amt);
     }
+
+    public void setForeign(int acctnum, boolean isforeign) {
+        BankAccount ba = accounts.get(acctnum);
+        ba.setForeign(isforeign);
+    }
+
+
 
     //////// loan auth method
     public boolean authorizeLoan(int acctnum, int loanamt) {
-        int balance = accounts.get(acctnum);
+        BankAccount ba = accounts.get(acctnum);
+        int balance = ba.getBalance();
         return balance >= loanamt / 2;
     }
 
 
     public String toString() {
-        Set<Integer> accts = accounts.keySet();
-        String result = "The bank has " + accts.size() + " accounts. ";
+        String result = "The bank has " + accounts.size()
+                + " accounts.";
 
-        for (int i : accts)
-            result += "\n\tBank account " + i
-                    + ": balance=" + accounts.get(i);
+        for (BankAccount ba : accounts.values())
+            result += "\n\tBank account "
+                    + ba.getAcctNum() + ": balance="
+                    + ba.getBalance() + ", is "
+                    + (ba.isForeign() ? "foreign" : "domestic");
         return result;
 
     }
 
     public void addInterest() {
-        Set<Integer> accts = accounts.keySet();
-        for (int i : accts) {
-            int balance = accounts.get(i);
-            int newbalance = (int) (balance * (1 + rate));
-            accounts.put(i, newbalance);
+        for (BankAccount ba : accounts.values()) {
+            int balance = ba.getBalance();
+            balance += (int) (balance * rate);
+            ba.setBalance(balance);
         }
     }
 

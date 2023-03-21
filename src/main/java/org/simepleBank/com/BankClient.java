@@ -14,7 +14,7 @@ public class BankClient {
         while (!done){
             System.out.println("Enter command (0=quit, 1=new,\n" +
                     "2=select, 3=deposit, 4=loan,\n" +
-                    "5=show, 6=interest):");
+                    "5=show, 6=interest, 7=setforeign):");
 
             int cmd = scanner.nextInt();
             processCommand(cmd);
@@ -31,11 +31,24 @@ public class BankClient {
         else if (cmd == 4) {authorizeLoan();}
         else if (cmd == 5) {showAll();}
         else if (cmd == 6) {addInterest();}
+        else if (cmd == 7) setForeign();
         else {
             System.out.println("Illegal command");
 
 
         }
+    }
+
+    private void setForeign() {
+        bank.setForeign(current, requestForeign());
+    }
+
+    private boolean requestForeign() {
+        System.out.print("Enter 1 for foreign, 2 for domestic: ");
+        int val = scanner.nextInt();
+
+        return (val == 1);
+
     }
 
     private void addInterest() {
@@ -73,7 +86,8 @@ public class BankClient {
     }
 
     private void newAccount() {
-        current = bank.newAccount();
+        boolean isforeign = requestForeign();
+        current = bank.newAccount(isforeign);
         System.out.println("Your new Account is" + current);
     }
 
@@ -82,12 +96,7 @@ public class BankClient {
         System.out.println("Goodbye!");
     }
 
-    public class BankProgram {
-        public static void main(String[] args){
-            BankClient client = new BankClient();
-            client.run();
-        }
-    }
+
 
     
 
